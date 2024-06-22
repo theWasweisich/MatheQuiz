@@ -22,6 +22,30 @@ namespace FormsApp
         {
             InitializeComponent();
             LoadSettings();
+            wait(2 * 1000);
+            this.BringToFront();
+            this.Activate();
+        }
+
+        public void wait(int milliseconds)
+        {
+            var timer1 = new System.Windows.Forms.Timer();
+            if (milliseconds == 0 || milliseconds < 0) { return; };
+
+            timer1.Interval = milliseconds;
+            timer1.Enabled = true;
+            timer1.Start();
+
+            timer1.Tick += (s, e) =>
+            {
+                timer1.Enabled = false;
+                timer1.Stop();
+            };
+
+            while (timer1.Enabled)
+            {
+                Application.DoEvents();
+            }
         }
 
         public void LoadSettings()
@@ -59,15 +83,14 @@ namespace FormsApp
         {
             switch (zahlenraum.Text)
             {
-                case "1-10":
+                case "1 - 10":
                     this.ZahlenraumValue = 10;
                     break;
-                case "1-100":
+                case "1 - 100":
                     this.ZahlenraumValue = 100;
                     break;
                 default:
-                    this.ZahlenraumValue = -1;
-                    break;
+                    throw new Exception("Re-Check Zahlenraum values on SettingsForm");
             }
             this.MaximumTime = ((int)maxTime.Value);
             this.ExersiceTypes = exercise_type.Text.Split(",");

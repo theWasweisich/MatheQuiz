@@ -122,7 +122,6 @@
             Controls.Add(label1);
             Name = "SettingsForm";
             TopMost = true;
-            WindowState = FormWindowState.Minimized;
             ((System.ComponentModel.ISupportInitialize)maxTime).EndInit();
             ResumeLayout(false);
             PerformLayout();

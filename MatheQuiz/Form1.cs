@@ -159,6 +159,7 @@ namespace FormsApp
             ResetTimer();
             calc_first.Text = "?";
             calc_second.Text = "?";
+            calc_operator.Text = "?";
             calc_result.Value = 0;
         }
 
