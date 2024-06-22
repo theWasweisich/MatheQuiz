@@ -9,4 +9,5 @@
 
 ## Reporting a Vulnerability
 
-If you have found a Vulnerability, please be kind an email one of the maintainers.
+If you have found a Vulnerability, please be kind and
+disclose it via the Security-Tab on this Repository
