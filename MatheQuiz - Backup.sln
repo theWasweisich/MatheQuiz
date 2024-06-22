@@ -8,11 +8,14 @@ EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
+		Pre-Release|Any CPU = Pre-Release|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{2503DDE8-DF1B-4802-8EFB-188617D7A71A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{2503DDE8-DF1B-4802-8EFB-188617D7A71A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2503DDE8-DF1B-4802-8EFB-188617D7A71A}.Pre-Release|Any CPU.ActiveCfg = Pre-Release|Any CPU
+		{2503DDE8-DF1B-4802-8EFB-188617D7A71A}.Pre-Release|Any CPU.Build.0 = Pre-Release|Any CPU
 		{2503DDE8-DF1B-4802-8EFB-188617D7A71A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2503DDE8-DF1B-4802-8EFB-188617D7A71A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
@@ -20,7 +23,7 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		RESX_ExcelExportMode = MultipleSheets
 		SolutionGuid = {519C5BDE-5755-4D62-9381-B6590AD9FAD3}
+		RESX_ExcelExportMode = MultipleSheets
 	EndGlobalSection
 EndGlobal
