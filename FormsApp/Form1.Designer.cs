@@ -72,6 +72,7 @@
             // 
             resources.ApplyResources(time_remaining_label, "time_remaining_label");
             time_remaining_label.Name = "time_remaining_label";
+            time_remaining_label.Click += time_remaining_label_Click;
             // 
             // toggle_exercise
             // 
@@ -141,6 +142,8 @@
             resources.ApplyResources(calc_result, "calc_result");
             calc_result.Name = "calc_result";
             calc_result.ValueChanged += calc_result_ValueChanged;
+            calc_result.KeyDown += CalcResult_KeyDown;
+            calc_result.KeyPress += CalcResult_Keypress;
             // 
             // label1
             // 
@@ -215,8 +218,6 @@
             Controls.Add(statusStrip1);
             Controls.Add(splitContainer1);
             Controls.Add(label1);
-            MaximizeBox = false;
-            MinimizeBox = false;
             Name = "Form1";
             Load += Form1_Load;
             statusStrip1.ResumeLayout(false);

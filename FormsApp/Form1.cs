@@ -112,6 +112,10 @@ namespace FormsApp
 
         private void CreateQuizz()
         {
+            if (zahlenraum <= 0)
+            {
+                zahlenraum = 10;
+            }
             int sum_first = randomizer.Next(zahlenraum);
             int sum_second = randomizer.Next(zahlenraum);
             int result = sum_first + sum_second;
@@ -124,7 +128,16 @@ namespace FormsApp
 
             calc_result.Focus();
 
+            this.BringToFront();
+            this.Activate();
+
+            DisplayTime(true, maxTime);
             timer1.Start();
+        }
+
+        private void CalcResult_Keypress()
+        {
+
         }
 
         private bool CheckAnswer()
@@ -222,7 +235,8 @@ namespace FormsApp
 
         private void LanguageSelector_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (LanguageSelector.SelectedItem.ToString() == "German")
+            string[] german_key = ["German (Deutsch)", "Deutsch (German)"];
+            if (german_key.Contains(LanguageSelector.SelectedItem.ToString()))
             {
                 ChangeLanguage("de");
             }
@@ -251,6 +265,23 @@ namespace FormsApp
 
         private void calc_result_ValueChanged(object sender, EventArgs e)
         {
+        }
+
+        private void time_remaining_label_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void CalcResult_Keypress(object sender, KeyPressEventArgs e)
+        {
+        }
+
+        private void CalcResult_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Return)
+            {
+                EndQuizz();
+            }
         }
     }
 }
