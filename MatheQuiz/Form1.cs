@@ -102,6 +102,10 @@ namespace FormsApp
             {
                 zahlenraum = 10;
             }
+
+            int operator_;
+            string[] possible_operators = Properties.Settings.Default.Calc_Types.Split(",");
+
             int sum_first = randomizer.Next(zahlenraum);
             int sum_second = randomizer.Next(zahlenraum);
             int result = sum_first + sum_second;
@@ -176,16 +180,29 @@ namespace FormsApp
                 // How do I get the Values of Form2?
                 int? Zahlenraum = prompt.ZahlenraumValue;
                 int? MaxTime = prompt.MaximumTime;
-                string[]? types = prompt.ExersiceTypes;
+                string[] types = new string[4];
+
+                if (prompt.ExersiceTypes == null)
+                {
+                    throw new Exception("Variable is null: ExersiceTypes");
+                }
+                if (prompt.ExersiceTypes.Length == 0)
+                {
+                    types[0] = "Addition";
+                } else
+                {
+                    types = prompt.ExersiceTypes.Split(",");
+                }
 
                 Zahlenraum ??= 10;
                 MaxTime ??= 60;
-                types ??= Array.Empty<string>();
 
                 Properties.Settings.Default.MaxTime = MaxTime.Value;
                 Properties.Settings.Default.Zahlenraum = Zahlenraum.Value;
-                Properties.Settings.Default.Calc_Types = string.Join(",", types);
+                string toSettings = string.Join(",", types);
+                Properties.Settings.Default.Calc_Types = toSettings;
 
+                Debug.WriteLine($"Types: {types}");
                 Properties.Settings.Default.Save();
 
                 InitSettings();

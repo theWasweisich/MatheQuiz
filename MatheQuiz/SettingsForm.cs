@@ -15,38 +15,17 @@ namespace FormsApp
     {
 
         public int? MaximumTime { get; set; }
-        public string[]? ExersiceTypes { get; set; }
+        public string? ExersiceTypes { get; set; }
         public int? ZahlenraumValue { get; set; }
 
         public SettingsForm()
         {
             InitializeComponent();
             LoadSettings();
-            wait(2 * 1000);
             this.BringToFront();
             this.Activate();
         }
 
-        public void wait(int milliseconds)
-        {
-            var timer1 = new System.Windows.Forms.Timer();
-            if (milliseconds == 0 || milliseconds < 0) { return; };
-
-            timer1.Interval = milliseconds;
-            timer1.Enabled = true;
-            timer1.Start();
-
-            timer1.Tick += (s, e) =>
-            {
-                timer1.Enabled = false;
-                timer1.Stop();
-            };
-
-            while (timer1.Enabled)
-            {
-                Application.DoEvents();
-            }
-        }
 
         public void LoadSettings()
         {
@@ -93,7 +72,16 @@ namespace FormsApp
                     throw new Exception("Re-Check Zahlenraum values on SettingsForm");
             }
             this.MaximumTime = ((int)maxTime.Value);
-            this.ExersiceTypes = exercise_type.Text.Split(",");
+            ListBox.SelectedObjectCollection items = exercise_type.SelectedItems;
+            this.ExersiceTypes = "";
+            string[] ExerciseTypes_List = new string[4];
+
+            int item_id = 0;
+            for (int i = 0; i < items.Count; i++)
+            {
+                ExerciseTypes_List[item_id] = items[i].ToString();
+            }
+            this.ExersiceTypes = string.Join(",", ExerciseTypes_List);
             this.DialogResult = DialogResult.OK;
             this.Close();
         }
@@ -102,6 +90,11 @@ namespace FormsApp
         {
             this.DialogResult = DialogResult.Cancel;
             this.Close();
+        }
+
+        private void zahlenraum_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

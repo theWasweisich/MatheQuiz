@@ -90,6 +90,7 @@
             resources.ApplyResources(zahlenraum, "zahlenraum");
             zahlenraum.Items.AddRange(new object[] { resources.GetString("zahlenraum.Items"), resources.GetString("zahlenraum.Items1") });
             zahlenraum.Name = "zahlenraum";
+            zahlenraum.SelectedIndexChanged += zahlenraum_SelectedIndexChanged;
             // 
             // save_button
             // 
