@@ -9,7 +9,7 @@ namespace FormsApp
     {
         public bool exercise_running = false;
 
-        Random randomizer = new Random();
+        readonly Random randomizer = new();
 
         public string[] exercise_types = [];
 
@@ -164,7 +164,7 @@ namespace FormsApp
 
         private void OptionsButton(object sender, EventArgs e)
         {
-            SettingsForm prompt = new SettingsForm();
+            SettingsForm prompt = new();
             var result = prompt.ShowDialog(this);
             if (result == DialogResult.Cancel)
             {
@@ -177,9 +177,9 @@ namespace FormsApp
                 int? MaxTime = prompt.MaximumTime;
                 string[]? types = prompt.ExersiceTypes;
 
-                if (Zahlenraum == null) { Zahlenraum = 10; }
-                if (MaxTime == null) { MaxTime = 60; }
-                if (types == null) { types = Array.Empty<string>(); }
+                Zahlenraum ??= 10;
+                MaxTime ??= 60;
+                types ??= Array.Empty<string>();
 
                 Properties.Settings.Default.MaxTime = MaxTime.Value;
                 Properties.Settings.Default.Zahlenraum = Zahlenraum.Value;
@@ -199,7 +199,7 @@ namespace FormsApp
         {
             foreach (Control c in this.Controls)
             {
-                ComponentResourceManager resources = new ComponentResourceManager(typeof(Form1));
+                ComponentResourceManager resources = new(typeof(Form1));
                 resources.ApplyResources(c, c.Name, new CultureInfo(language));
             }
         }
