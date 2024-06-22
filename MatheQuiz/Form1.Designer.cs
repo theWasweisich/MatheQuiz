@@ -72,7 +72,6 @@
             // 
             resources.ApplyResources(time_remaining_label, "time_remaining_label");
             time_remaining_label.Name = "time_remaining_label";
-            time_remaining_label.Click += time_remaining_label_Click;
             // 
             // toggle_exercise
             // 
@@ -92,7 +91,6 @@
             // 
             toolStripStatusLabel1.Name = "toolStripStatusLabel1";
             resources.ApplyResources(toolStripStatusLabel1, "toolStripStatusLabel1");
-            toolStripStatusLabel1.Click += toolStripStatusLabel1_Click;
             // 
             // toolStripStatusLabel2
             // 
@@ -116,34 +114,28 @@
             // 
             resources.ApplyResources(calc_first, "calc_first");
             calc_first.Name = "calc_first";
-            calc_first.Click += calc_first_Click;
             // 
             // calc_operator
             // 
             resources.ApplyResources(calc_operator, "calc_operator");
             calc_operator.Name = "calc_operator";
-            calc_operator.Click += calc_operator_Click;
             // 
             // calc_second
             // 
             resources.ApplyResources(calc_second, "calc_second");
             calc_second.Name = "calc_second";
-            calc_second.Click += calc_second_Click;
             // 
             // calc_equals
             // 
             resources.ApplyResources(calc_equals, "calc_equals");
             calc_equals.Name = "calc_equals";
-            calc_equals.Click += calc_equals_Click;
             // 
             // calc_result
             // 
             calc_result.BackColor = SystemColors.ControlLight;
             resources.ApplyResources(calc_result, "calc_result");
             calc_result.Name = "calc_result";
-            calc_result.ValueChanged += calc_result_ValueChanged;
             calc_result.KeyDown += CalcResult_KeyDown;
-            calc_result.KeyPress += CalcResult_Keypress;
             // 
             // label1
             // 
@@ -219,7 +211,6 @@
             Controls.Add(splitContainer1);
             Controls.Add(label1);
             Name = "Form1";
-            Load += Form1_Load;
             statusStrip1.ResumeLayout(false);
             statusStrip1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)calc_result).EndInit();

@@ -38,20 +38,6 @@ namespace FormsApp
             return;
         }
 
-        private void toolStripStatusLabel1_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void toolStripSplitButton1_ButtonClick(object sender, EventArgs e)
-        {
-
-        }
-
-        private void toolStripSplitButton1_ButtonClick_1(object sender, EventArgs e)
-        {
-
-        }
 
         private void QuizResult_Click(object sender, EventArgs e)
         {
@@ -135,11 +121,6 @@ namespace FormsApp
             timer1.Start();
         }
 
-        private void CalcResult_Keypress()
-        {
-
-        }
-
         private bool CheckAnswer()
         {
             exercise_running = false;
@@ -179,16 +160,6 @@ namespace FormsApp
             calc_first.Text = "?";
             calc_second.Text = "?";
             calc_result.Value = 0;
-        }
-
-        private void label2_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void Form1_Load(object sender, EventArgs e)
-        {
-
         }
 
         private void OptionsButton(object sender, EventArgs e)
@@ -244,36 +215,6 @@ namespace FormsApp
             {
                 ChangeLanguage("en-DE");
             }
-        }
-
-        private void calc_first_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void calc_operator_Click(object sender, EventArgs e)
-        {
-        }
-
-        private void calc_second_Click(object sender, EventArgs e)
-        {
-        }
-
-        private void calc_equals_Click(object sender, EventArgs e)
-        {
-        }
-
-        private void calc_result_ValueChanged(object sender, EventArgs e)
-        {
-        }
-
-        private void time_remaining_label_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void CalcResult_Keypress(object sender, KeyPressEventArgs e)
-        {
         }
 
         private void CalcResult_KeyDown(object sender, KeyEventArgs e)
