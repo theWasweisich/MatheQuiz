@@ -33,13 +33,19 @@
             label2 = new Label();
             maxTime = new NumericUpDown();
             label3 = new Label();
-            exercise_type = new CheckedListBox();
             label4 = new Label();
             label5 = new Label();
             zahlenraum = new ListBox();
             save_button = new Button();
             QuitButton = new Button();
+            checkAddition = new CheckBox();
+            checkSubtraction = new CheckBox();
+            checkMultiplication = new CheckBox();
+            flowLayoutPanel1 = new FlowLayoutPanel();
+            checkDivision = new CheckBox();
+            tableLayoutPanel1 = new TableLayoutPanel();
             ((System.ComponentModel.ISupportInitialize)maxTime).BeginInit();
+            flowLayoutPanel1.SuspendLayout();
             SuspendLayout();
             // 
             // label1
@@ -65,14 +71,6 @@
             resources.ApplyResources(label3, "label3");
             label3.Name = "label3";
             label3.Click += label3_Click;
-            // 
-            // exercise_type
-            // 
-            exercise_type.BackColor = Color.FromArgb(255, 192, 192);
-            resources.ApplyResources(exercise_type, "exercise_type");
-            exercise_type.FormattingEnabled = true;
-            exercise_type.Items.AddRange(new object[] { resources.GetString("exercise_type.Items"), resources.GetString("exercise_type.Items1"), resources.GetString("exercise_type.Items2"), resources.GetString("exercise_type.Items3") });
-            exercise_type.Name = "exercise_type";
             // 
             // label4
             // 
@@ -106,17 +104,58 @@
             QuitButton.UseVisualStyleBackColor = true;
             QuitButton.Click += QuitButton_Click;
             // 
+            // checkAddition
+            // 
+            resources.ApplyResources(checkAddition, "checkAddition");
+            checkAddition.Name = "checkAddition";
+            checkAddition.UseVisualStyleBackColor = true;
+            checkAddition.CheckedChanged += checkBox1_CheckedChanged;
+            // 
+            // checkSubtraction
+            // 
+            resources.ApplyResources(checkSubtraction, "checkSubtraction");
+            checkSubtraction.Name = "checkSubtraction";
+            checkSubtraction.UseVisualStyleBackColor = true;
+            checkSubtraction.CheckedChanged += checkSubtraction_CheckedChanged;
+            // 
+            // checkMultiplication
+            // 
+            resources.ApplyResources(checkMultiplication, "checkMultiplication");
+            checkMultiplication.Name = "checkMultiplication";
+            checkMultiplication.UseVisualStyleBackColor = true;
+            // 
+            // flowLayoutPanel1
+            // 
+            flowLayoutPanel1.Controls.Add(checkAddition);
+            flowLayoutPanel1.Controls.Add(checkSubtraction);
+            flowLayoutPanel1.Controls.Add(checkMultiplication);
+            flowLayoutPanel1.Controls.Add(checkDivision);
+            resources.ApplyResources(flowLayoutPanel1, "flowLayoutPanel1");
+            flowLayoutPanel1.Name = "flowLayoutPanel1";
+            // 
+            // checkDivision
+            // 
+            resources.ApplyResources(checkDivision, "checkDivision");
+            checkDivision.Name = "checkDivision";
+            checkDivision.UseVisualStyleBackColor = true;
+            // 
+            // tableLayoutPanel1
+            // 
+            resources.ApplyResources(tableLayoutPanel1, "tableLayoutPanel1");
+            tableLayoutPanel1.Name = "tableLayoutPanel1";
+            // 
             // SettingsForm
             // 
             resources.ApplyResources(this, "$this");
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(255, 128, 128);
+            Controls.Add(tableLayoutPanel1);
+            Controls.Add(flowLayoutPanel1);
             Controls.Add(QuitButton);
             Controls.Add(save_button);
             Controls.Add(zahlenraum);
             Controls.Add(label5);
             Controls.Add(label4);
-            Controls.Add(exercise_type);
             Controls.Add(label3);
             Controls.Add(maxTime);
             Controls.Add(label2);
@@ -124,6 +163,8 @@
             Name = "SettingsForm";
             TopMost = true;
             ((System.ComponentModel.ISupportInitialize)maxTime).EndInit();
+            flowLayoutPanel1.ResumeLayout(false);
+            flowLayoutPanel1.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -134,11 +175,16 @@
         private Label label2;
         private NumericUpDown maxTime;
         private Label label3;
-        private CheckedListBox exercise_type;
         private Label label4;
         private Label label5;
         private ListBox zahlenraum;
         private Button save_button;
         private Button QuitButton;
+        private CheckBox checkAddition;
+        private CheckBox checkSubtraction;
+        private CheckBox checkMultiplication;
+        private FlowLayoutPanel flowLayoutPanel1;
+        private CheckBox checkDivision;
+        private TableLayoutPanel tableLayoutPanel1;
     }
 }

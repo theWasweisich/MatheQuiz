@@ -31,10 +31,10 @@ namespace FormsApp
         {
             Trace.TraceInformation("Loading Settings!");
             string[] typen = Properties.Settings.Default.Calc_Types.Split(",");
-            if (typen.Contains("Addition")) { exercise_type.SetItemChecked(0, true); }
-            if (typen.Contains("Subtraction")) { exercise_type.SetItemChecked(1, true); }
-            if (typen.Contains("Multiplication")) { exercise_type.SetItemChecked(2, true); }
-            if (typen.Contains("Division")) { exercise_type.SetItemChecked(3, true); }
+            if (typen.Contains("Addition")) { checkAddition.Checked = true; }
+            if (typen.Contains("Subtraction")) { checkSubtraction.Checked = true; }
+            if (typen.Contains("Multiplication")) { checkMultiplication.Checked = true; }
+            if (typen.Contains("Division")) { checkDivision.Checked = true; }
 
             maxTime.Value = Properties.Settings.Default.MaxTime;
 
@@ -72,15 +72,13 @@ namespace FormsApp
                     throw new Exception("Re-Check Zahlenraum values on SettingsForm");
             }
             this.MaximumTime = ((int)maxTime.Value);
-            ListBox.SelectedObjectCollection items = exercise_type.SelectedItems;
-            this.ExersiceTypes = "";
             string[] ExerciseTypes_List = new string[4];
 
-            int item_id = 0;
-            for (int i = 0; i < items.Count; i++)
-            {
-                ExerciseTypes_List[item_id] = items[i].ToString();
-            }
+            if (checkAddition.Checked) { ExerciseTypes_List[0] = "Addition"; }
+            if (checkSubtraction.Checked) { ExerciseTypes_List[1] = "Subtraction"; }
+            if (checkMultiplication.Checked) { ExerciseTypes_List[2] = "Multiplication"; }
+            if (checkDivision.Checked) { ExerciseTypes_List[3] = "Division"; }
+
             this.ExersiceTypes = string.Join(",", ExerciseTypes_List);
             this.DialogResult = DialogResult.OK;
             this.Close();
@@ -93,6 +91,16 @@ namespace FormsApp
         }
 
         private void zahlenraum_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void checkBox1_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void checkSubtraction_CheckedChanged(object sender, EventArgs e)
         {
 
         }

@@ -117,4 +117,22 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="exercise_stopped" xml:space="preserve">
+    <value>Exercise stopped</value>
+  </data>
+  <data name="stop_exercise" xml:space="preserve">
+    <value>Stop exercise</value>
+  </data>
+  <data name="exercise_running" xml:space="preserve">
+    <value>Exercise running</value>
+  </data>
+  <data name="correct" xml:space="preserve">
+    <value>Correct</value>
+  </data>
+  <data name="start" xml:space="preserve">
+    <value>Start</value>
+  </data>
+  <data name="incorrect" xml:space="preserve">
+    <value>Incorrect</value>
+  </data>
 </root>

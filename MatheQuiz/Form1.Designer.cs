@@ -36,7 +36,6 @@
             statusStrip1 = new StatusStrip();
             toolStripStatusLabel1 = new ToolStripStatusLabel();
             toolStripStatusLabel2 = new ToolStripStatusLabel();
-            toolStripDropDownButton1 = new ToolStripDropDownButton();
             timer1 = new System.Windows.Forms.Timer(components);
             calc_first = new Label();
             calc_operator = new Label();
@@ -45,12 +44,15 @@
             calc_result = new NumericUpDown();
             label1 = new Label();
             label2 = new Label();
-            LanguageSelector = new ComboBox();
             splitContainer1 = new SplitContainer();
             panel1 = new Panel();
+            panel5 = new Panel();
+            LanguageSelector = new ComboBox();
             panel2 = new Panel();
             panel3 = new Panel();
             panel4 = new Panel();
+            menuStrip1 = new MenuStrip();
+            optionsItem = new ToolStripMenuItem();
             statusStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)calc_result).BeginInit();
             ((System.ComponentModel.ISupportInitialize)splitContainer1).BeginInit();
@@ -58,9 +60,11 @@
             splitContainer1.Panel2.SuspendLayout();
             splitContainer1.SuspendLayout();
             panel1.SuspendLayout();
+            panel5.SuspendLayout();
             panel2.SuspendLayout();
             panel3.SuspendLayout();
             panel4.SuspendLayout();
+            menuStrip1.SuspendLayout();
             SuspendLayout();
             // 
             // timeRemaining
@@ -76,14 +80,15 @@
             // toggle_exercise
             // 
             resources.ApplyResources(toggle_exercise, "toggle_exercise");
+            toggle_exercise.BackColor = SystemColors.Control;
             toggle_exercise.Cursor = Cursors.Hand;
             toggle_exercise.Name = "toggle_exercise";
-            toggle_exercise.UseVisualStyleBackColor = true;
-            toggle_exercise.Click += QuizResult_Click;
+            toggle_exercise.UseVisualStyleBackColor = false;
+            toggle_exercise.Click += ToggleExerciseClick;
             // 
             // statusStrip1
             // 
-            statusStrip1.Items.AddRange(new ToolStripItem[] { toolStripStatusLabel1, toolStripStatusLabel2, toolStripDropDownButton1 });
+            statusStrip1.Items.AddRange(new ToolStripItem[] { toolStripStatusLabel1, toolStripStatusLabel2 });
             resources.ApplyResources(statusStrip1, "statusStrip1");
             statusStrip1.Name = "statusStrip1";
             // 
@@ -96,14 +101,6 @@
             // 
             toolStripStatusLabel2.Name = "toolStripStatusLabel2";
             resources.ApplyResources(toolStripStatusLabel2, "toolStripStatusLabel2");
-            toolStripStatusLabel2.Spring = true;
-            // 
-            // toolStripDropDownButton1
-            // 
-            toolStripDropDownButton1.DisplayStyle = ToolStripItemDisplayStyle.Text;
-            resources.ApplyResources(toolStripDropDownButton1, "toolStripDropDownButton1");
-            toolStripDropDownButton1.Name = "toolStripDropDownButton1";
-            toolStripDropDownButton1.Click += OptionsButton;
             // 
             // timer1
             // 
@@ -149,14 +146,6 @@
             resources.ApplyResources(label2, "label2");
             label2.Name = "label2";
             // 
-            // LanguageSelector
-            // 
-            LanguageSelector.FormattingEnabled = true;
-            LanguageSelector.Items.AddRange(new object[] { resources.GetString("LanguageSelector.Items"), resources.GetString("LanguageSelector.Items1") });
-            resources.ApplyResources(LanguageSelector, "LanguageSelector");
-            LanguageSelector.Name = "LanguageSelector";
-            LanguageSelector.SelectedIndexChanged += LanguageSelector_SelectedIndexChanged;
-            // 
             // splitContainer1
             // 
             resources.ApplyResources(splitContainer1, "splitContainer1");
@@ -174,10 +163,25 @@
             // 
             // panel1
             // 
-            panel1.Controls.Add(label2);
-            panel1.Controls.Add(LanguageSelector);
+            panel1.Controls.Add(panel5);
             resources.ApplyResources(panel1, "panel1");
             panel1.Name = "panel1";
+            // 
+            // panel5
+            // 
+            panel5.Controls.Add(label2);
+            panel5.Controls.Add(LanguageSelector);
+            resources.ApplyResources(panel5, "panel5");
+            panel5.Name = "panel5";
+            // 
+            // LanguageSelector
+            // 
+            LanguageSelector.DropDownStyle = ComboBoxStyle.DropDownList;
+            LanguageSelector.FormattingEnabled = true;
+            LanguageSelector.Items.AddRange(new object[] { resources.GetString("LanguageSelector.Items"), resources.GetString("LanguageSelector.Items1") });
+            resources.ApplyResources(LanguageSelector, "LanguageSelector");
+            LanguageSelector.Name = "LanguageSelector";
+            LanguageSelector.SelectedIndexChanged += LanguageSelector_SelectedIndexChanged;
             // 
             // panel2
             // 
@@ -201,6 +205,18 @@
             resources.ApplyResources(panel4, "panel4");
             panel4.Name = "panel4";
             // 
+            // menuStrip1
+            // 
+            menuStrip1.Items.AddRange(new ToolStripItem[] { optionsItem });
+            resources.ApplyResources(menuStrip1, "menuStrip1");
+            menuStrip1.Name = "menuStrip1";
+            // 
+            // optionsItem
+            // 
+            optionsItem.Name = "optionsItem";
+            resources.ApplyResources(optionsItem, "optionsItem");
+            optionsItem.Click += OptionsToolStripMenuItem_Click;
+            // 
             // Form1
             // 
             resources.ApplyResources(this, "$this");
@@ -209,6 +225,7 @@
             Controls.Add(panel3);
             Controls.Add(statusStrip1);
             Controls.Add(splitContainer1);
+            Controls.Add(menuStrip1);
             Controls.Add(label1);
             Name = "Form1";
             statusStrip1.ResumeLayout(false);
@@ -219,10 +236,13 @@
             ((System.ComponentModel.ISupportInitialize)splitContainer1).EndInit();
             splitContainer1.ResumeLayout(false);
             panel1.ResumeLayout(false);
-            panel1.PerformLayout();
+            panel5.ResumeLayout(false);
+            panel5.PerformLayout();
             panel2.ResumeLayout(false);
             panel3.ResumeLayout(false);
             panel4.ResumeLayout(false);
+            menuStrip1.ResumeLayout(false);
+            menuStrip1.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -234,7 +254,6 @@
         private Button toggle_exercise;
         private StatusStrip statusStrip1;
         private ToolStripStatusLabel toolStripStatusLabel1;
-        private ToolStripStatusLabel toolStripStatusLabel2;
         private System.Windows.Forms.Timer timer1;
         private Label calc_first;
         private Label calc_operator;
@@ -242,13 +261,16 @@
         private Label calc_equals;
         private NumericUpDown calc_result;
         private Label label1;
-        private ToolStripDropDownButton toolStripDropDownButton1;
         private Label label2;
-        private ComboBox LanguageSelector;
         private SplitContainer splitContainer1;
         private Panel panel1;
         private Panel panel2;
         private Panel panel3;
         private Panel panel4;
+        private MenuStrip menuStrip1;
+        private ToolStripMenuItem optionsItem;
+        private ComboBox LanguageSelector;
+        private Panel panel5;
+        private ToolStripStatusLabel toolStripStatusLabel2;
     }
 }

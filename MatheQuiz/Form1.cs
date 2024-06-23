@@ -2,6 +2,9 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Globalization;
 using System.Threading;
+using System.Windows.Forms;
+using System.Resources;
+using MatheQuiz.Properties;
 
 namespace FormsApp
 {
@@ -20,12 +23,16 @@ namespace FormsApp
 
         public int expectedResult;
 
+        ResourceManager? resManager;
+        CultureInfo? culture;
+
         public Form1()
         {
             InitializeComponent();
             calc_result.Enabled = false;
-            LanguageSelector.SelectedIndex = 0;
             InitSettings();
+            InitLocalisation();
+            LanguageSelector.SelectedIndex = 1;
         }
 
         public void InitSettings()
@@ -38,23 +45,68 @@ namespace FormsApp
             return;
         }
 
-
-        private void QuizResult_Click(object sender, EventArgs e)
+        public void InitLocalisation()
         {
+            resManager = new ResourceManager("MatheQuiz.Properties.Resources", typeof(Form1).Assembly);
+
+            culture = CultureInfo.CurrentCulture;
+            Update_Localisation();
+        }
+
+        public void ChangeLocalisation(string langCode)
+        {
+            culture = new CultureInfo(langCode);
+            Update_Localisation();
+        }
+
+        public void Update_Localisation()
+        {
+            if (resManager == null) { throw new NullReferenceException("The resource manager has not yet been initialized!"); }
+
+            string? exercise_running_label = resManager.GetString("exercise_running", culture);
+            string? exercise_stopped = resManager.GetString("exercise_stopped", culture);
+            string? stop_exercise = resManager.GetString("stop_exercise", culture);
+            string? start = resManager.GetString("start", culture);
+
+            exercise_running_label ??= "Error";
+            exercise_stopped ??= "Error";
+            stop_exercise ??= "Error";
+            start ??= "Error";
+
+            time_remaining_label.Visible = false;
+            timeRemaining.Visible = false;
+
+            if (exercise_running)
+            {
+                toolStripStatusLabel1.Text = exercise_running_label;
+                toggle_exercise.Text = stop_exercise;
+            }
+            else
+            {
+                toolStripStatusLabel1.Text = exercise_stopped;
+                toggle_exercise.Text = start;
+            }
+
+        }
+
+
+        private void ToggleExerciseClick(object sender, EventArgs e)
+        {
+            if (resManager == null) { throw new NullReferenceException("The resource manager has not yet been initialized!"); }
             if (exercise_running)
             {
                 EndQuizz();
-                toggle_exercise.Text = "Start exercise";
-                toolStripStatusLabel1.Text = "Exercise stopped";
-                toolStripStatusLabel1.ForeColor = System.Drawing.Color.Gray;
+                // toggle_exercise.Text = "Start exercise";
+                toolStripStatusLabel1.Text = resManager.GetString("exercise_stopped", culture);
+                toolStripStatusLabel1.ForeColor = Color.Gray;
                 exercise_running = false;
             }
             else
             {
                 CreateQuizz();
-                toggle_exercise.Text = "End Exercise";
-                toolStripStatusLabel1.Text = "Exercise running";
-                toolStripStatusLabel1.ForeColor = System.Drawing.Color.Green;
+                toggle_exercise.Text = resManager.GetString("stop_exercise", culture);
+                toolStripStatusLabel1.Text = resManager.GetString("exercise_running", culture);
+                toolStripStatusLabel1.ForeColor = Color.Green;
                 exercise_running = true;
             }
         }
@@ -68,11 +120,13 @@ namespace FormsApp
         {
             if (!visible || remaining <= 0)
             {
-                time_remaining_label.Text = string.Empty;
-                timeRemaining.Text = string.Empty;
+                time_remaining_label.Visible = false;
+                timeRemaining.Visible = false;
             }
             else
             {
+                time_remaining_label.Visible = true;
+                timeRemaining.Visible = true;
                 time_remaining_label.Text = "Time left:";
                 timeRemaining.Text = remaining.ToString();
             }
@@ -103,12 +157,53 @@ namespace FormsApp
                 zahlenraum = 10;
             }
 
-            int operator_;
+            string operator_ = "";
             string[] possible_operators = Properties.Settings.Default.Calc_Types.Split(",");
 
-            int sum_first = randomizer.Next(zahlenraum);
-            int sum_second = randomizer.Next(zahlenraum);
-            int result = sum_first + sum_second;
+            int iterations = 0;
+            while (operator_ == "")
+            {
+                if (iterations >= 10)
+                {
+                    throw new Exception("Ok, you gotta be kiddin' me!");
+                }
+                operator_ = possible_operators[randomizer.Next(possible_operators.Length)];
+                iterations++;
+            }
+
+
+            int sum_first = randomizer.Next(zahlenraum) + 1;
+            int sum_second = randomizer.Next(zahlenraum) + 1;
+            int result;
+            switch (operator_)
+            {
+                case "Addition":
+                    calc_operator.Text = "+";
+                    result = sum_first + sum_second;
+                    break;
+                case "Subtraction":
+                    calc_operator.Text = "-";
+                    result = sum_first - sum_second;
+                    break;
+                case "Multiplication":
+                    calc_operator.Text = "*";
+                    result = sum_first * sum_second;
+                    break;
+                case "Division":
+                    calc_operator.Text = "/";
+                    try
+                    {
+                        result = sum_first / sum_second;
+                    }
+                    catch (DivideByZeroException)
+                    {
+                        ResetQuiz();
+                        return;
+                    }
+                    break;
+                default:
+                    throw new Exception("Operator Value does not match one of the Operators");
+            }
 
             expectedResult = result;
             calc_first.Text = sum_first.ToString();
@@ -135,31 +230,33 @@ namespace FormsApp
 
         async private void EndQuizz()
         {
+            if (resManager == null) { throw new NullReferenceException("The resource manager has not yet been initialized!"); }
             timer1.Stop();
             DisplayTime(false);
             bool correct = CheckAnswer();
-            Color previous = toggle_exercise.BackColor;
             int wait_seconds = 2;
             if (correct)
             {
-                toggle_exercise.Text = "Correct!";
+                toggle_exercise.Text = resManager.GetString("correct", culture);
                 toggle_exercise.BackColor = Color.Green;
                 await Task.Delay(wait_seconds * 1000);
-                toggle_exercise.Text = "Start";
+                toggle_exercise.Text = resManager.GetString("start", culture);
+                toggle_exercise.BackColor = SystemColors.Control;
             }
             else
             {
-                toggle_exercise.Text = "Incorrect!";
+                toggle_exercise.Text = resManager.GetString("incorrect", culture);
                 toggle_exercise.BackColor = Color.Red;
                 await Task.Delay(wait_seconds * 1000);
-                toggle_exercise.Text = "Start";
+                toggle_exercise.Text = resManager.GetString("start", culture);
+                toggle_exercise.BackColor = SystemColors.Control;
             }
-            toggle_exercise.BackColor = previous;
             ResetQuiz();
         }
 
         private void ResetQuiz()
         {
+            exercise_running = false;
             ResetTimer();
             calc_first.Text = "?";
             calc_second.Text = "?";
@@ -189,7 +286,8 @@ namespace FormsApp
                 if (prompt.ExersiceTypes.Length == 0)
                 {
                     types[0] = "Addition";
-                } else
+                }
+                else
                 {
                     types = prompt.ExersiceTypes.Split(",");
                 }
@@ -209,29 +307,34 @@ namespace FormsApp
             }
         }
 
-        /// <summary>
-        /// Changes the current Program Language
-        /// </summary>
-        /// <param name="language">The Language Code</param>
-        private void ChangeLanguage(string language)
+        private void UpdateLocale(string language)
         {
-            foreach (Control c in this.Controls)
+            System.Threading.Thread.CurrentThread.CurrentUICulture = new CultureInfo(language);
+            ComponentResourceManager resources = new(typeof(Form1));
+            resources.ApplyResources(this, "$this");
+            applyResources(resources, this.Controls);
+        }
+
+        private void applyResources(ComponentResourceManager resources, Control.ControlCollection ctls)
+        {
+            foreach (Control ctl in ctls)
             {
-                ComponentResourceManager resources = new(typeof(Form1));
-                resources.ApplyResources(c, c.Name, new CultureInfo(language));
+                resources.ApplyResources(ctl, ctl.Name);
+                applyResources(resources, ctl.Controls);
             }
         }
 
         private void LanguageSelector_SelectedIndexChanged(object sender, EventArgs e)
         {
+
             string[] german_key = ["German (Deutsch)", "Deutsch (German)"];
             if (german_key.Contains(LanguageSelector.SelectedItem.ToString()))
             {
-                ChangeLanguage("de");
+                UpdateLocale("de");
             }
             else
             {
-                ChangeLanguage("en-DE");
+                UpdateLocale("en-DE");
             }
         }
 
@@ -242,5 +345,7 @@ namespace FormsApp
                 EndQuizz();
             }
         }
+
+        private void OptionsToolStripMenuItem_Click(object sender, EventArgs e) { OptionsButton(sender, e); }
     }
 }

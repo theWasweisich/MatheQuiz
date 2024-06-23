@@ -143,7 +143,7 @@
     <value>MathQuiz</value>
   </data>
   <data name="calc_operator.Text" xml:space="preserve">
-    <value>+</value>
+    <value>?</value>
   </data>
   <data name="calc_second.Text" xml:space="preserve">
     <value>?</value>
@@ -168,5 +168,14 @@
   </data>
   <data name="LanguageSelector.Items1" xml:space="preserve">
     <value>English (Englisch)</value>
+  </data>
+  <data name="menuStrip1.Text" xml:space="preserve">
+    <value>menuStrip1</value>
+  </data>
+  <data name="optionsToolStripMenuItem.Text" xml:space="preserve">
+    <value>Optionen</value>
+  </data>
+  <data name="toolStripStatusLabel2.Text" xml:space="preserve">
+    <value>Noce: Round to 2 decimal places</value>
   </data>
 </root>
