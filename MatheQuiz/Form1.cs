@@ -252,6 +252,8 @@ namespace FormsApp
                     throw new Exception("Operator Value does not match one of the Operators");
             }
 
+            if (result == 88) { CreateQuizz(); return; } // That's an evil number!
+
             expectedResult = result;
             calc_first.Text = sum_first.ToString();
             calc_second.Text = sum_second.ToString();
