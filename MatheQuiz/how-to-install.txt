@@ -1,0 +1,8 @@
+=== How to install MathQuiz ===
+
+1. Download the File MatheQuizV012.zip from https://github.com/theWasweisich/MatheQuiz/releases/tag/v0.1.2
+2. Extract the files
+3. Run "setup.exe"
+4. Don't freak out, I know it looks very sketchy but trust me
+5. Follow the installer
+6. Have fun!
