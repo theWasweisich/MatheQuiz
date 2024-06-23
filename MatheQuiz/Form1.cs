@@ -28,13 +28,25 @@ namespace FormsApp
 
         public Form1()
         {
-            InitializeComponent();
+            InitializeComponent(); // Muss vor sämtlichem Code ausgeführt werden
             calc_result.Enabled = false;
             InitSettings();
             InitLocalisation();
             LanguageSelector.SelectedIndex = 1;
         }
 
+        /// <summary>
+        /// A helper function that might help future additions questionmark
+        /// </summary>
+        public static void ForceRestart()
+        {
+            Application.Restart();
+            Environment.Exit(0);
+        }
+
+        /// <summary>
+        /// Loads the currently applied settings into memory
+        /// </summary>
         public void InitSettings()
         {
             exercise_types = Properties.Settings.Default.Calc_Types.Split(",");
@@ -45,36 +57,58 @@ namespace FormsApp
             return;
         }
 
+        /// <summary>
+        /// Initializes the resourceManager and the current culture
+        /// </summary>
         public void InitLocalisation()
         {
             resManager = new ResourceManager("MatheQuiz.Properties.Resources", typeof(Form1).Assembly);
 
             culture = CultureInfo.CurrentCulture;
-            Update_Localisation();
+            Update_Localisation("en-DE");
+        }
+
+        public ResourceManager GetCustomResourceManager()
+        {
+            if (resManager == null) { throw new NullReferenceException("The resource manager has not yet been initialized!"); }
+            return resManager;
         }
 
         public void ChangeLocalisation(string langCode)
         {
             culture = new CultureInfo(langCode);
-            Update_Localisation();
+            Update_Localisation("en-DE");
         }
 
-        public void Update_Localisation()
+        /// <summary>
+        /// Updates the current Localisation of hard-coded elements
+        /// </summary>
+        /// <exception cref="NullReferenceException">Thrown if the resourceManager is not yet initialized</exception>
+        public void Update_Localisation(string language)
         {
-            if (resManager == null) { throw new NullReferenceException("The resource manager has not yet been initialized!"); }
+            resManager = GetCustomResourceManager();
+
+            culture = new CultureInfo(language);
 
             string? exercise_running_label = resManager.GetString("exercise_running", culture);
             string? exercise_stopped = resManager.GetString("exercise_stopped", culture);
             string? stop_exercise = resManager.GetString("stop_exercise", culture);
             string? start = resManager.GetString("start", culture);
+            string? options = resManager.GetString("options", culture);
+            string? rounding_note = resManager.GetString("rounding_note", culture);
 
             exercise_running_label ??= "Error";
             exercise_stopped ??= "Error";
             stop_exercise ??= "Error";
             start ??= "Error";
+            options ??= "Error";
+            rounding_note ??= "Error";
 
             time_remaining_label.Visible = false;
             timeRemaining.Visible = false;
+
+            optionsItem.Text = options;
+            toolStripRoundingInfo.Text = rounding_note;
 
             if (exercise_running)
             {
@@ -89,10 +123,13 @@ namespace FormsApp
 
         }
 
-
+        /// <summary>
+        /// Function called by UI-Element to start or stop the current quiz
+        /// </summary>
+        /// <exception cref="NullReferenceException">Resources have not been initialized</exception>
         private void ToggleExerciseClick(object sender, EventArgs e)
         {
-            if (resManager == null) { throw new NullReferenceException("The resource manager has not yet been initialized!"); }
+            resManager = GetCustomResourceManager();
             if (exercise_running)
             {
                 EndQuizz();
@@ -132,12 +169,18 @@ namespace FormsApp
             }
         }
 
+        /// <summary>
+        /// Resets the timer
+        /// </summary>
         private void ResetTimer()
         {
             timer1.Stop();
             timeElapsed = 0;
         }
 
+        /// <summary>
+        /// Called by the timer object
+        /// </summary>
         private void Timer_Tick(object sender, EventArgs e)
         {
             if (timeElapsed >= maxTime)
@@ -150,6 +193,10 @@ namespace FormsApp
             DisplayTime(true, (maxTime - timeElapsed));
         }
 
+        /// <summary>
+        /// Creates a random quiz
+        /// </summary>
+        /// <exception cref="Exception">It was not possible to chose an operator</exception>
         private void CreateQuizz()
         {
             if (zahlenraum <= 0)
@@ -163,7 +210,7 @@ namespace FormsApp
             int iterations = 0;
             while (operator_ == "")
             {
-                if (iterations >= 10)
+                if (iterations >= 20)
                 {
                     throw new Exception("Ok, you gotta be kiddin' me!");
                 }
@@ -220,6 +267,10 @@ namespace FormsApp
             timer1.Start();
         }
 
+        /// <summary>
+        /// Checks if the given result matches the expected result
+        /// </summary>
+        /// <returns>true if the answer is correct, false otherwise</returns>
         private bool CheckAnswer()
         {
             exercise_running = false;
@@ -228,9 +279,12 @@ namespace FormsApp
             return calc_result.Value == expectedResult;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         async private void EndQuizz()
         {
-            if (resManager == null) { throw new NullReferenceException("The resource manager has not yet been initialized!"); }
+            resManager = GetCustomResourceManager();
             timer1.Stop();
             DisplayTime(false);
             bool correct = CheckAnswer();
@@ -309,31 +363,32 @@ namespace FormsApp
 
         private void UpdateLocale(string language)
         {
-            System.Threading.Thread.CurrentThread.CurrentUICulture = new CultureInfo(language);
+            Thread.CurrentThread.CurrentUICulture = new CultureInfo(language);
             ComponentResourceManager resources = new(typeof(Form1));
             resources.ApplyResources(this, "$this");
-            applyResources(resources, this.Controls);
+            ApplyResources(resources, this.Controls);
         }
 
-        private void applyResources(ComponentResourceManager resources, Control.ControlCollection ctls)
+        private void ApplyResources(ComponentResourceManager resources, Control.ControlCollection ctls)
         {
             foreach (Control ctl in ctls)
             {
                 resources.ApplyResources(ctl, ctl.Name);
-                applyResources(resources, ctl.Controls);
+                ApplyResources(resources, ctl.Controls);
             }
         }
 
         private void LanguageSelector_SelectedIndexChanged(object sender, EventArgs e)
         {
-
             string[] german_key = ["German (Deutsch)", "Deutsch (German)"];
             if (german_key.Contains(LanguageSelector.SelectedItem.ToString()))
             {
+                Update_Localisation("de");
                 UpdateLocale("de");
             }
             else
             {
+                Update_Localisation("en-DE");
                 UpdateLocale("en-DE");
             }
         }
@@ -347,5 +402,10 @@ namespace FormsApp
         }
 
         private void OptionsToolStripMenuItem_Click(object sender, EventArgs e) { OptionsButton(sender, e); }
+
+        private void calc_result_FocusEnter(object sender, EventArgs e)
+        {
+            calc_result.ResetText();
+        }
     }
 }

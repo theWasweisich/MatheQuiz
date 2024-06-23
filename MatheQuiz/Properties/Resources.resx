@@ -135,4 +135,10 @@
   <data name="incorrect" xml:space="preserve">
     <value>Incorrect</value>
   </data>
+  <data name="options" xml:space="preserve">
+    <value>Options</value>
+  </data>
+  <data name="rounding_note" xml:space="preserve">
+    <value>Note: Round to 2 decimal places</value>
+  </data>
 </root>

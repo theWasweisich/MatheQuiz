@@ -35,7 +35,7 @@
             toggle_exercise = new Button();
             statusStrip1 = new StatusStrip();
             toolStripStatusLabel1 = new ToolStripStatusLabel();
-            toolStripStatusLabel2 = new ToolStripStatusLabel();
+            toolStripRoundingInfo = new ToolStripStatusLabel();
             timer1 = new System.Windows.Forms.Timer(components);
             calc_first = new Label();
             calc_operator = new Label();
@@ -88,7 +88,7 @@
             // 
             // statusStrip1
             // 
-            statusStrip1.Items.AddRange(new ToolStripItem[] { toolStripStatusLabel1, toolStripStatusLabel2 });
+            statusStrip1.Items.AddRange(new ToolStripItem[] { toolStripStatusLabel1, toolStripRoundingInfo });
             resources.ApplyResources(statusStrip1, "statusStrip1");
             statusStrip1.Name = "statusStrip1";
             // 
@@ -97,10 +97,10 @@
             toolStripStatusLabel1.Name = "toolStripStatusLabel1";
             resources.ApplyResources(toolStripStatusLabel1, "toolStripStatusLabel1");
             // 
-            // toolStripStatusLabel2
+            // toolStripRoundingInfo
             // 
-            toolStripStatusLabel2.Name = "toolStripStatusLabel2";
-            resources.ApplyResources(toolStripStatusLabel2, "toolStripStatusLabel2");
+            toolStripRoundingInfo.Name = "toolStripRoundingInfo";
+            resources.ApplyResources(toolStripRoundingInfo, "toolStripRoundingInfo");
             // 
             // timer1
             // 
@@ -132,6 +132,7 @@
             calc_result.BackColor = SystemColors.ControlLight;
             resources.ApplyResources(calc_result, "calc_result");
             calc_result.Name = "calc_result";
+            calc_result.Enter += calc_result_FocusEnter;
             calc_result.KeyDown += CalcResult_KeyDown;
             // 
             // label1
@@ -271,6 +272,6 @@
         private ToolStripMenuItem optionsItem;
         private ComboBox LanguageSelector;
         private Panel panel5;
-        private ToolStripStatusLabel toolStripStatusLabel2;
+        private ToolStripStatusLabel toolStripRoundingInfo;
     }
 }

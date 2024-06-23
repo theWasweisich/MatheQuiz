@@ -135,4 +135,10 @@
   <data name="incorrect" xml:space="preserve">
     <value>Falsch</value>
   </data>
+  <data name="options" xml:space="preserve">
+    <value>Optionen</value>
+  </data>
+  <data name="rounding_note" xml:space="preserve">
+    <value>Notiz: Auf zwei Nachkommastellen runden</value>
+  </data>
 </root>

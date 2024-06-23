@@ -97,6 +97,24 @@ namespace MatheQuiz.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Options.
+        /// </summary>
+        public static string options {
+            get {
+                return ResourceManager.GetString("options", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Note: Round to 2 decimal places.
+        /// </summary>
+        public static string rounding_note {
+            get {
+                return ResourceManager.GetString("rounding_note", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Start.
         /// </summary>
         public static string start {
